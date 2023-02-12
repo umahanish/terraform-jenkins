@@ -16,6 +16,36 @@ variable "awsprops" {
 provider "aws" {
   region = lookup(var.awsprops, "region")
 }
+locals {
+  user_data = <<EOF
+  #!/bin/bash
+  sudo yum update –y
+  #sudo yum install -y httpd
+  #sudo service httpd start
+  #sudo chkconfig httpd on
+  #sudo groupadd www
+  #sudo usermod -a -G www ec2-user
+  #sudo chown ec2-user /var/www/html/ -R
+  #sudo echo "Auto-Scaling of webserver" > /var/www/html/index.html
+  #sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  #sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+  #sudo yum upgrade
+  #sudo amazon-linux-extras install java-openjdk11 -y
+  #sudo yum install jenkins -y
+  #sudo systemctl enable jenkins
+  #sudo systemctl start jenkins
+  cd /opt/
+  sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz
+  ls
+  sudo tar -xzvf apache-tomcat-9.0.71.tar.gz
+  ls
+  sudo mv apache-tomcat-9.0.71 tomcat9
+  ls -ltr
+  sudo chown ec2-user:ec2-user tomcat9/ -R
+  cd tomcat9/bin/
+  ./startup.sh
+  EOF
+}
 
 resource "aws_security_group" "terraformsgrp" {
   name = lookup(var.awsprops, "secgroupname")
@@ -69,7 +99,7 @@ resource "aws_instance" "project-iac" {
     volume_type = "gp2"
   }
   tags = {
-    Name ="SERVER01"
+    Name ="Tomcat-Server"
     Environment = "DEV"
     OS = "Amazon Linux 2"
     Managed = "IAC"
