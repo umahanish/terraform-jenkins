@@ -8,30 +8,13 @@ variable "awsprops" {
     subnet = "subnet-09aa84f54e078ea61"
     publicip = true
     keyname = "studyit-keypair"
-    secgroupname = "Terraform-linux-sgrp"
+    secgroupname = "Terraform-linux-sgrp1"
   }
   }
 
 
 provider "aws" {
   region = lookup(var.awsprops, "region")
-}
-locals {
-  user_data = <<EOF
-  #!/bin/bash
-  sudo yum update –y
-  sudo amazon-linux-extras install java-openjdk11 -y
-  cd /opt/
-  sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.71/bin/apache-tomcat-9.0.71.tar.gz
-  ls
-  sudo tar -xzvf apache-tomcat-9.0.71.tar.gz
-  ls
-  sudo mv apache-tomcat-9.0.71 tomcat9
-  ls -ltr
-  sudo chown ec2-user:ec2-user tomcat9/ -R
-  cd tomcat9/bin/
-  ./startup.sh
-  EOF
 }
 
 resource "aws_security_group" "terraformsgrp" {
@@ -99,7 +82,7 @@ resource "aws_instance" "project-iac" {
     OS = "Amazon Linux 2"
     Managed = "IAC"
   }
-
+  user_data = file("script.sh")
   depends_on = [ aws_security_group.terraformsgrp ]
 }
 
