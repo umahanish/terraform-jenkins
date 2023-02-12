@@ -68,6 +68,14 @@ resource "aws_security_group" "terraformsgrp" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  // To Allow Port 8080 Transport
+  ingress {
+    from_port = 8080
+    protocol = "tcp"
+    to_port = 8080
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port       = 0
     to_port         = 0
