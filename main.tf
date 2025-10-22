@@ -2,13 +2,13 @@ variable "awsprops" {
     type = map
     default = {
     region = "eu-west-2"
-    vpc = "vpc-0b8f9db95ea75373d"
-    ami = "ami-0b25f6ba2f4419235"
+    vpc = "vpc-005afc3d9e0e2c68f"
+    ami = "ami-0f7b02bb6a0e14062"
     itype = "t2.micro"
-    subnet = "subnet-08035b0f3608bb652"
+    subnet = "subnet-0d773bbc39ef4e458"
     publicip = true
-    keyname = "umakey"
-    secgroupname = "Terraform-linux-sgrp1"
+    keyname = "cognex6"
+    secgroupname = "sg-0f57effe4036f6b87"
   }
   }
 
