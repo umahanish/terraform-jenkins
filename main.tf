@@ -4,7 +4,7 @@ variable "awsprops" {
     region = "eu-west-2"
     vpc = "vpc-005afc3d9e0e2c68f"
     ami = "ami-0f7b02bb6a0e14062"
-    itype = "t2.micro"
+    itype = "t3.micro"
     subnet = "subnet-0d773bbc39ef4e458"
     publicip = true
     keyname = "cognex6"
