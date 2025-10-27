@@ -8,7 +8,7 @@ variable "awsprops" {
     subnet = "subnet-0d773bbc39ef4e458"
     publicip = true
     keyname = "cognex6"
-    secgroupname = "Linux-Security-Group"
+    secgroupname = "DevOps-Security-Group"
   }
   }
 
